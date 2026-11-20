@@ -1,0 +1,44 @@
+{
+  "name": "agent-service-switcher",
+  "displayName": "AI Service Switcher",
+  "description": "Switch an agent window between Codex, Claude Code and GitHub Copilot.",
+  "publisher": "agent-windows",
+  "version": "0.2.1",
+  "engines": {"vscode": "^1.96.0"},
+  "categories": ["Other"],
+  "extensionKind": ["ui"],
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "capabilities": {"untrustedWorkspaces": {"supported": true}},
+  "contributes": {
+    "commands": [
+      {"command": "agentWindows.chooseService", "title": "Switch AI Service…", "category": "Agent Windows", "icon": "$(arrow-swap)"},
+      {"command": "agentWindows.useCodex", "title": "Codex", "category": "AI Service"},
+      {"command": "agentWindows.useClaude", "title": "Claude Code", "category": "AI Service"},
+      {"command": "agentWindows.useCopilot", "title": "GitHub Copilot", "category": "AI Service"},
+      {"command": "agentWindows.restoreService", "title": "Restore Selected AI Service", "category": "Agent Windows"}
+    ],
+    "submenus": [
+      {"id": "agentWindows.services", "label": "Switch AI service", "icon": "$(arrow-swap)"}
+    ],
+    "menus": {
+      "view/title": [
+        {"submenu": "agentWindows.services", "group": "navigation@-100", "when": "config.window.title =~ /\\[(launcher-)?[0-9a-f]{10}\\]/ && (view == chatgpt.sidebarView || view == chatgpt.sidebarSecondaryView || view == claudeVSCodeSidebar || view == claudeVSCodeSidebarSecondary || view =~ /^workbench\\.panel\\.chat\\.view\\./)"}
+      ],
+      "agentWindows.services": [
+        {"command": "agentWindows.useCodex", "group": "1_services@1"},
+        {"command": "agentWindows.useClaude", "group": "1_services@2"},
+        {"command": "agentWindows.useCopilot", "group": "1_services@3"}
+      ],
+      "commandPalette": [
+        {"command": "agentWindows.restoreService", "when": "false"},
+        {"command": "agentWindows.useCodex", "when": "false"},
+        {"command": "agentWindows.useClaude", "when": "false"},
+        {"command": "agentWindows.useCopilot", "when": "false"}
+      ]
+    },
+    "keybindings": [
+      {"command": "agentWindows.chooseService", "key": "ctrl+alt+m", "mac": "cmd+alt+m", "when": "config.window.title =~ /\\[(launcher-)?[0-9a-f]{10}\\]/"}
+    ]
+  }
+}

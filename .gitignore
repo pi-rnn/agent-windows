@@ -1,0 +1,13 @@
+# Build products
+dist/
+AgentLauncher/AgentLauncher
+AgentLauncher/AgentLauncher.iconset/
+AgentLauncher/icon.png
+
+# Python and macOS clutter
+__pycache__/
+*.pyc
+.DS_Store
+
+# Backups the installers make next to a file they change
+*.before-*
